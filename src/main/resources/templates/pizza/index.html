@@ -15,7 +15,15 @@
                 <h1>Lista Pizze:</h1>
             </div>
             <div>
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                <form th:action="@{/pizzeria/searchByName}" method="get">
+                    <div class="d-flex align-items-center">
+                        <input class="form-control me-2" type="text" name="name" placeholder="Search"
+                            aria-label="Search" />
+                        <button class="btn btn-primary " type="submit">cerca</button>
+                    </div>
+
+                </form>
+
             </div>
         </div>
 
