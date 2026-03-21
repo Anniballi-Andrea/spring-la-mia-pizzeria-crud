@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lxmls:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/style :: style}"></th:block>
+    <title>home</title>
+</head>
+<main>
+    <header>
+        <th:block th:replace="~{fragments/nav :: nav}"></th:block>
+    </header>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h1>Lista Pizze:</h1>
+            </div>
+            <div>
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+            </div>
+        </div>
+
+        <table class="table" th:if="${pizzas.size() > 0}">
+            <thead>
+                <tr>
+                    <th>nome</th>
+                    <th>descrizione</th>
+                    <th>immagine</th>
+                    <th>prezzo</th>
+                    <th>info</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pizza : ${pizzas}" th:object="${pizza}">
+
+                    <td>[[*{name}]]</td>
+                    <td>[[*{description}]]</td>
+                    <td><img th:src="@{/images/{img}(img=*{image})}" alt="" style="width: 100px;"></td>
+                    <td>[[*{price}]] €</td>
+                    <td><a th:href="@{/pizzeria/{id}(id=*{id})}" class="btn btn-primary">Apri</a></td>
+
+
+                </tr>
+            </tbody>
+        </table>
+        <p th:if="${pizzas.size() == 0}">Al momento non abbiamo pizze</p>
+    </div>
+</main>
+
+
+
+</html>
