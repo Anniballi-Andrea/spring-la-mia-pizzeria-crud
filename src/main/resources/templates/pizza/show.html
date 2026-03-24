@@ -3,9 +3,10 @@
 
 <head>
     <th:block th:replace="~{fragments/style :: style}"></th:block>
-    <title>home</title>
+    <title>pizza [[${pizza.name}]]</title>
 </head>
-<main>
+
+<body>
     <header>
         <th:block th:replace="~{fragments/nav :: nav}"></th:block>
     </header>
@@ -37,6 +38,6 @@
 
     </footer>
 
-</main>
+</body>
 
 </html>

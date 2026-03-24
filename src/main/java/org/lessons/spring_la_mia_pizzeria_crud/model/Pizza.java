@@ -9,9 +9,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "pizze")
@@ -21,19 +21,19 @@ public class Pizza {
     private Integer id;
 
     @Column(nullable = false)
-    @NotNull
+    @NotNull(message = "Il nome non va lasciato vuoto")
+    @NotBlank(message = "Il nome non va lasciato vuoto")
     private String name;
 
     @Lob
     private String description;
 
-    @NotBlank
+    @NotBlank(message = "L'immagine va inserita")
     private String image;
 
     @Column(nullable = false)
-    @NotNull
-    @Size(min = 0)
-    @NotBlank
+    @NotNull(message = "Il prezzo non va lasciato vuoto")
+    @DecimalMin(value = "0.00", inclusive = false, message = "Il prezzo deve essere maggiore di 0")
     private BigDecimal price;
 
     public Integer getId() {

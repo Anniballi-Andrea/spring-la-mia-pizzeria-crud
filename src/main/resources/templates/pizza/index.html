@@ -3,56 +3,73 @@
 
 <head>
     <th:block th:replace="~{fragments/style :: style}"></th:block>
-    <title>home</title>
+    <title>Le pizze</title>
 </head>
-<main>
+
+<body>
     <header>
         <th:block th:replace="~{fragments/nav :: nav}"></th:block>
     </header>
-    <div class="container mt-5">
-        <div class="d-flex justify-content-between">
-            <div>
-                <h1>Lista Pizze:</h1>
-            </div>
-            <div>
-                <form th:action="@{/pizzeria/searchByName}" method="get">
-                    <div class="d-flex align-items-center">
-                        <input class="form-control me-2" type="text" name="name" placeholder="Search"
-                            aria-label="Search" />
-                        <button class="btn btn-primary " type="submit">cerca</button>
-                    </div>
+    <main style="margin-bottom: 10rem;">
 
-                </form>
 
+        <div class="container mt-5 mb-5">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h1>Lista Pizze:</h1>
+                </div>
+                <div>
+                    <form th:action="@{/pizzeria/searchByName}" method="get">
+                        <div class="d-flex align-items-center">
+                            <input class="form-control me-2" type="text" name="name" placeholder="Search"
+                                aria-label="Search" />
+                            <button class="btn btn-primary " type="submit">cerca</button>
+                        </div>
+
+                    </form>
+
+                </div>
             </div>
+            <div class="mt-3">
+                <a class="btn btn-primary" th:href="@{/pizzeria/create}"><strong>+</strong></a>
+            </div>
+
+            <table class="table" th:if="${pizzas.size() > 0}">
+                <thead>
+                    <tr>
+                        <th>nome</th>
+                        <th>descrizione</th>
+                        <th>immagine</th>
+                        <th>prezzo</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="pizza : ${pizzas}" th:object="${pizza}">
+
+                        <td>[[*{name}]]</td>
+                        <td>[[*{description}]]</td>
+                        <td><img th:src="@{/images/{img}(img=*{image})}" alt="" style="width: 100px;"></td>
+                        <td>[[*{price}]] €</td>
+                        <td><a th:href="@{/pizzeria/{id}(id=*{id})}" class="btn btn-primary btn-sm">Apri</a></td>
+                        <td><a th:href="@{/pizzeria/edit/{id}(id=*{id})}" class="btn btn-success btn-sm">Modifica</a>
+                        </td>
+                        <td>
+                            <form action="#" th:action="@{/pizzeria/delete/{id}(id=*{id})}" method="post">
+                                <button type="submit" class="btn btn-danger btn-sm">elimina</button>
+                            </form>
+                        </td>
+
+
+                    </tr>
+                </tbody>
+            </table>
+            <p th:if="${pizzas.size() == 0}">Al momento non abbiamo pizze</p>
         </div>
-
-        <table class="table" th:if="${pizzas.size() > 0}">
-            <thead>
-                <tr>
-                    <th>nome</th>
-                    <th>descrizione</th>
-                    <th>immagine</th>
-                    <th>prezzo</th>
-                    <th>info</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="pizza : ${pizzas}" th:object="${pizza}">
-
-                    <td>[[*{name}]]</td>
-                    <td>[[*{description}]]</td>
-                    <td><img th:src="@{/images/{img}(img=*{image})}" alt="" style="width: 100px;"></td>
-                    <td>[[*{price}]] €</td>
-                    <td><a th:href="@{/pizzeria/{id}(id=*{id})}" class="btn btn-primary">Apri</a></td>
-
-
-                </tr>
-            </tbody>
-        </table>
-        <p th:if="${pizzas.size() == 0}">Al momento non abbiamo pizze</p>
-    </div>
-</main>
+    </main>
+</body>
 
 
 
