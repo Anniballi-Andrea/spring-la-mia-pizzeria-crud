@@ -3,7 +3,7 @@
 
 <head>
     <th:block th:replace="~{fragments/style :: style}"></th:block>
-    <title>Aggiungi offerta</title>
+    <title>Modifica offerta</title>
 </head>
 
 <body>
@@ -12,9 +12,10 @@
     </header>
     <main>
         <div class="container">
-            <form id="add-offer-form" th:action="@{/offer/create}" th:object="${offer}" method="post">
+            <form id="add-offer-form" th:action="@{/offer/edit/{id}(id=${offer.id})}" th:object="${offer}"
+                method="post">
                 <div class="text-center mt-5">
-                    <h3>Aggiungere un offerta a: pizza [[${offer.getPizza().getName()}]]</h3>
+                    <h3>Modifica un offerta a: pizza [[${offer.getPizza().getName()}]]</h3>
                 </div>
                 <input type="hidden" th:field="*{pizza}">
                 <div class="row cols-3 mt-5 py-4 border">
