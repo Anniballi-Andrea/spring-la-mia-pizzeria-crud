@@ -22,18 +22,18 @@ import jakarta.validation.Valid;
 public class PizzeriaController {
 
     @Autowired
-    private PizzaRepository repo;
+    private PizzaRepository pizzaRepo;
 
     @GetMapping
     public String home(Model model) {
-        List<Pizza> pizzas = repo.findAll();
+        List<Pizza> pizzas = pizzaRepo.findAll();
         model.addAttribute("pizzas", pizzas);
         return "pizza/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Integer id, Model model) {
-        Pizza pizza = repo.findById(id).get();
+        Pizza pizza = pizzaRepo.findById(id).get();
         model.addAttribute("pizza", pizza);
 
         return "pizza/show";
@@ -41,7 +41,7 @@ public class PizzeriaController {
 
     @GetMapping("/searchByName")
     public String searchName(@RequestParam(name = "name") String name, Model model) {
-        List<Pizza> pizzas = repo.findByNameContaining(name);
+        List<Pizza> pizzas = pizzaRepo.findByNameContaining(name);
 
         model.addAttribute("pizzas", pizzas);
 
@@ -60,13 +60,13 @@ public class PizzeriaController {
         if (bindingResult.hasErrors()) {
             return "pizza/addPizza";
         }
-        repo.save(formPizza);
+        pizzaRepo.save(formPizza);
         return "redirect:/pizzeria";
     }
 
     @GetMapping("/edit/{id}")
     public String editPizza(@PathVariable Integer id, Model model) {
-        model.addAttribute("pizza", repo.findById(id).get());
+        model.addAttribute("pizza", pizzaRepo.findById(id).get());
         return "pizza/editPizza";
     }
 
@@ -76,14 +76,14 @@ public class PizzeriaController {
         if (bindingResult.hasErrors()) {
             return "pizza/edit";
         }
-        repo.save(formPizza);
+        pizzaRepo.save(formPizza);
 
         return "redirect:/pizzeria";
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        repo.deleteById(id);
+        pizzaRepo.deleteById(id);
         return "redirect:/pizzeria";
     }
 
