@@ -81,6 +81,14 @@ public class Pizza {
         this.price = price;
     }
 
+    public List<Offer> getOffers() {
+        return this.offers;
+    }
+
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
+    }
+
     @Override
 
     public String toString() {
