@@ -76,4 +76,8 @@ public class Offer {
         this.end = end;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s", offerName);
+    }
 }
