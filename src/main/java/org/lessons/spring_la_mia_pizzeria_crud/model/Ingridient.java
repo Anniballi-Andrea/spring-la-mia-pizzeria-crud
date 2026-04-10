@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -19,6 +20,7 @@ public class Ingridient {
     private Integer id;
 
     @NotNull(message = "il nome non può essere vuoto")
+    @NotBlank(message = "il nome non può essere vuoto")
     private String name;
 
     @ManyToMany(mappedBy = "ingridients")

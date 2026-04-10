@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -44,6 +45,41 @@ public class IngridientsController {
         }
         ingridientRepo.save(formIngridient);
         return "redirect:/ingridients";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editPizza(@PathVariable Integer id, Model model) {
+        model.addAttribute("ingridient", ingridientRepo.findById(id).get());
+        model.addAttribute("edit", true);
+        return "ingridients/create-or-edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String update(@Valid @ModelAttribute("ingridient") Ingridient formIngridient, BindingResult bindingResult,
+            Model model) {
+        if (bindingResult.hasErrors()) {
+            return "ingridients/create-or-edit";
+        }
+
+        ingridientRepo.save(formIngridient);
+
+        return "redirect:/ingridients";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+
+        Ingridient ingridientToDelete = ingridientRepo.findById(id).get();
+
+        for (Pizza linkedPizza : ingridientToDelete.getPizzas()) {
+
+            linkedPizza.getIngridients().remove(ingridientToDelete);
+
+        }
+        ingridientRepo.delete(ingridientToDelete);
+
+        return "redirect:/ingridients";
+
     }
 
 }

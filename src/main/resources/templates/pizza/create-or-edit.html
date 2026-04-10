@@ -14,8 +14,15 @@
     <main>
 
         <div class="container">
-            <h1 class="mb-3">Aggiungi una pizza:</h1>
-            <form id="add-pizza-form" th:action="@{/pizzeria/create}" th:object="${pizza}" method="post">
+            <div th:unless="${edit}">
+                <h1 class="mb-3">Aggiungi una pizza:</h1>
+            </div>
+            <div th:if="${edit}">
+                <h1 class="mb-3">modifica pizza: [[${pizza.name}]]</h1>
+            </div>
+
+            <form id="add-pizza-form" th:action="${edit} ? @{|/pizzeria/edit/${pizza.id}|} : @{/pizzeria/create}"
+                th:object="${pizza}" method="post">
                 <div class="mb-3" th:if="${#fields.hasErrors()}">
                     <p class="text-danger">completa i campi con un errore</p>
                 </div>
@@ -66,6 +73,18 @@
                                     <li th:each="error : ${#fields.errors('description')}" th:text="${error}" />
                                 </ul>
                             </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-4 mt-3">
+                        <h5>ingredienti:</h5>
+                        <div class="form-check" th:each="ingridient : ${ingridients}">
+                            <input type="checkbox" th:id="|ingridient-${ingridient.id}|" th:field="${pizza.ingridients}"
+                                th:value="${ingridient.id}">
+                            <label class="form-check-label" th:for="|ingridient-${ingridient.id}|"
+                                th:text="${ingridient.name}" />
+
                         </div>
 
                     </div>

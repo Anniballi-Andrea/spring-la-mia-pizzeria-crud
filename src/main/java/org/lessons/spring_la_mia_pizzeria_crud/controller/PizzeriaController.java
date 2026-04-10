@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.lessons.spring_la_mia_pizzeria_crud.model.Offer;
 import org.lessons.spring_la_mia_pizzeria_crud.model.Pizza;
+import org.lessons.spring_la_mia_pizzeria_crud.repository.IngridientRepository;
 import org.lessons.spring_la_mia_pizzeria_crud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,9 @@ public class PizzeriaController {
 
     @Autowired
     private PizzaRepository pizzaRepo;
+
+    @Autowired
+    private IngridientRepository ingridientRepo;
 
     @GetMapping
     public String home(Model model) {
@@ -52,14 +56,16 @@ public class PizzeriaController {
     @GetMapping("/create")
     public String addPizza(Model model) {
         model.addAttribute("pizza", new Pizza());
-        return "pizza/addPizza";
+        model.addAttribute("ingridients", ingridientRepo.findAll());
+        return "pizza/create-or-edit";
     }
 
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("pizza") Pizza formPizza,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "pizza/addPizza";
+            model.addAttribute("ingridients", ingridientRepo.findAll());
+            return "pizza/create-or-edit";
         }
         pizzaRepo.save(formPizza);
         return "redirect:/pizzeria";
@@ -68,14 +74,19 @@ public class PizzeriaController {
     @GetMapping("/edit/{id}")
     public String editPizza(@PathVariable Integer id, Model model) {
         model.addAttribute("pizza", pizzaRepo.findById(id).get());
-        return "pizza/editPizza";
+        model.addAttribute("ingridients", ingridientRepo.findAll());
+        model.addAttribute("edit", true);
+        return "pizza/create-or-edit";
     }
 
     @PostMapping("/edit/{id}")
     public String updatePizza(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult,
-            Model Model) {
+            Model model) {
+
         if (bindingResult.hasErrors()) {
-            return "pizza/edit";
+            model.addAttribute("ingridients", ingridientRepo.findAll());
+            model.addAttribute("edit", true);
+            return "pizza/create-or-edit";
         }
         pizzaRepo.save(formPizza);
 
