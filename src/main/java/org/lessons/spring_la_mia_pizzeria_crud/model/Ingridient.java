@@ -2,6 +2,8 @@ package org.lessons.spring_la_mia_pizzeria_crud.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +26,7 @@ public class Ingridient {
     private String name;
 
     @ManyToMany(mappedBy = "ingridients")
+    @JsonBackReference
     private List<Pizza> pizzas;
 
     public Integer getId() {

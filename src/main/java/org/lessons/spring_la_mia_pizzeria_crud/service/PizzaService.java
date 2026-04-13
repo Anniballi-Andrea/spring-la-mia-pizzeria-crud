@@ -15,7 +15,7 @@ public class PizzaService {
     @Autowired
     private PizzaRepository pizzaRepo;
 
-    public List<Pizza> findAll() {
+    public List<Pizza> getAll() {
 
         return pizzaRepo.findAll();
     }
@@ -32,6 +32,10 @@ public class PizzaService {
 
         }
         return pizzaAttempt.get();
+    }
+
+    public Optional<Pizza> findById(Integer id) {
+        return pizzaRepo.findById(id);
     }
 
     public Pizza create(Pizza pizza) {

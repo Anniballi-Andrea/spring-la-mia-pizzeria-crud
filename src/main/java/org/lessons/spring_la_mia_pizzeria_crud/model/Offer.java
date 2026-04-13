@@ -2,6 +2,8 @@ package org.lessons.spring_la_mia_pizzeria_crud.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +25,7 @@ public class Offer {
 
     @ManyToOne
     @JoinColumn(name = "pizza_id", nullable = false)
+    @JsonBackReference
     private Pizza pizza;
 
     @Column(name = "name")

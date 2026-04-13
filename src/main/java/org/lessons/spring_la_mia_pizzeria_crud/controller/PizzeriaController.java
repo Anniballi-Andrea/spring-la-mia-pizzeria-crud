@@ -31,7 +31,7 @@ public class PizzeriaController {
 
     @GetMapping
     public String home(Model model) {
-        List<Pizza> pizzas = pizzaService.findAll();
+        List<Pizza> pizzas = pizzaService.getAll();
         model.addAttribute("pizzas", pizzas);
         return "pizza/index";
     }
