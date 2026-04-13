@@ -44,11 +44,23 @@
                                                     <span>[[${offer.start}]] / [[${offer.end}]]</span>
                                                 </p>
                                             </div>
-                                            <div>
-                                                <a class="btn btn-warning btn-sm"
-                                                    th:href="@{/offer/edit/{id} (id=${offer.id})}"><i
-                                                        class="bi bi-pencil"></i></a>
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-2">
+                                                    <a class="btn btn-warning btn-sm"
+                                                        th:href="@{/offer/edit/{id} (id=${offer.id})}"><i
+                                                            class="bi bi-pencil"></i></a>
+                                                </div>
+                                                <div>
+                                                    <form th:action="@{/offer/delete/{id}(id=${offer.id})}"
+                                                        method="post">
+                                                        <button type="submit" class="btn btn-danger btn-sm"><i
+                                                                class="bi bi-trash3"></i>
+
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
+
                                         </div>
                                     </div>
 

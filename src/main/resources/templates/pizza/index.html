@@ -59,22 +59,27 @@
                                     class="bi bi-pencil"></i></a>
                         </td>
                         <td>
-                            <form action="#" th:action="@{/pizzeria/delete/{id}(id=*{id})}" method="post">
-                                <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i>
 
-                                </button>
-                            </form>
+
+                            <div th:replace="~{fragments/modal :: modal(*{id})}"></div>
+
+
                         </td>
 
 
                     </tr>
                 </tbody>
             </table>
-            <p th:if="${pizzas.size() == 0}">Al momento non abbiamo pizze</p>
+
+        </div>
+
+        <p th:if="${pizzas.size() == 0}">Al momento non abbiamo pizze</p>
         </div>
     </main>
-</body>
 
+
+    <th:block th:replace="~{fragments/script :: scripts}"></th:block>
+</body>
 
 
 </html>
