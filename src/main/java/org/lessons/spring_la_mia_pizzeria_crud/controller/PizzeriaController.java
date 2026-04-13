@@ -5,8 +5,6 @@ import java.util.List;
 import org.lessons.spring_la_mia_pizzeria_crud.model.Offer;
 import org.lessons.spring_la_mia_pizzeria_crud.model.Pizza;
 import org.lessons.spring_la_mia_pizzeria_crud.repository.IngridientRepository;
-import org.lessons.spring_la_mia_pizzeria_crud.repository.OfferRepository;
-import org.lessons.spring_la_mia_pizzeria_crud.repository.PizzaRepository;
 import org.lessons.spring_la_mia_pizzeria_crud.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,9 +25,6 @@ public class PizzeriaController {
 
     @Autowired
     private PizzaService pizzaService;
-
-    @Autowired
-    OfferRepository offerRepository;
 
     @Autowired
     private IngridientRepository ingridientRepo;
