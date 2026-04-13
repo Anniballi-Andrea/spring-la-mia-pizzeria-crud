@@ -1,8 +1,7 @@
 package org.lessons.spring_la_mia_pizzeria_crud.controller;
 
 import org.lessons.spring_la_mia_pizzeria_crud.model.Ingridient;
-import org.lessons.spring_la_mia_pizzeria_crud.model.Pizza;
-import org.lessons.spring_la_mia_pizzeria_crud.repository.IngridientRepository;
+import org.lessons.spring_la_mia_pizzeria_crud.service.IngridientsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,12 +20,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class IngridientsController {
 
     @Autowired
-    private IngridientRepository ingridientRepo;
+    private IngridientsService ingridientService;
 
     @GetMapping
     public String index(Model model) {
 
-        model.addAttribute("ingridients", ingridientRepo.findAll());
+        model.addAttribute("ingridients", ingridientService.getAll());
         return "ingridients/index";
     }
 
@@ -43,13 +42,13 @@ public class IngridientsController {
         if (bindingResult.hasErrors()) {
             return "ingridients/create-or-edit";
         }
-        ingridientRepo.save(formIngridient);
+        ingridientService.create(formIngridient);
         return "redirect:/ingridients";
     }
 
     @GetMapping("/edit/{id}")
     public String editPizza(@PathVariable Integer id, Model model) {
-        model.addAttribute("ingridient", ingridientRepo.findById(id).get());
+        model.addAttribute("ingridient", ingridientService.getById(id));
         model.addAttribute("edit", true);
         return "ingridients/create-or-edit";
     }
@@ -61,7 +60,7 @@ public class IngridientsController {
             return "ingridients/create-or-edit";
         }
 
-        ingridientRepo.save(formIngridient);
+        ingridientService.create(formIngridient);
 
         return "redirect:/ingridients";
     }
@@ -69,14 +68,7 @@ public class IngridientsController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
 
-        Ingridient ingridientToDelete = ingridientRepo.findById(id).get();
-
-        for (Pizza linkedPizza : ingridientToDelete.getPizzas()) {
-
-            linkedPizza.getIngridients().remove(ingridientToDelete);
-
-        }
-        ingridientRepo.delete(ingridientToDelete);
+        ingridientService.deleteById(id);
 
         return "redirect:/ingridients";
 

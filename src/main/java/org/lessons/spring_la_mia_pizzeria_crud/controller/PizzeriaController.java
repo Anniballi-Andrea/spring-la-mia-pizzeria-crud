@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.lessons.spring_la_mia_pizzeria_crud.model.Offer;
 import org.lessons.spring_la_mia_pizzeria_crud.model.Pizza;
-import org.lessons.spring_la_mia_pizzeria_crud.repository.IngridientRepository;
+import org.lessons.spring_la_mia_pizzeria_crud.service.IngridientsService;
 import org.lessons.spring_la_mia_pizzeria_crud.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +27,7 @@ public class PizzeriaController {
     private PizzaService pizzaService;
 
     @Autowired
-    private IngridientRepository ingridientRepo;
+    private IngridientsService ingridientService;
 
     @GetMapping
     public String home(Model model) {
@@ -56,7 +56,7 @@ public class PizzeriaController {
     @GetMapping("/create")
     public String addPizza(Model model) {
         model.addAttribute("pizza", new Pizza());
-        model.addAttribute("ingridients", ingridientRepo.findAll());
+        model.addAttribute("ingridients", ingridientService.getAll());
         return "pizza/create-or-edit";
     }
 
@@ -64,7 +64,7 @@ public class PizzeriaController {
     public String store(@Valid @ModelAttribute("pizza") Pizza formPizza,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("ingridients", ingridientRepo.findAll());
+            model.addAttribute("ingridients", ingridientService.getAll());
             return "pizza/create-or-edit";
         }
         pizzaService.create(formPizza);
@@ -74,7 +74,7 @@ public class PizzeriaController {
     @GetMapping("/edit/{id}")
     public String editPizza(@PathVariable Integer id, Model model) {
         model.addAttribute("pizza", pizzaService.getById(id));
-        model.addAttribute("ingridients", ingridientRepo.findAll());
+        model.addAttribute("ingridients", ingridientService.getAll());
         model.addAttribute("edit", true);
         return "pizza/create-or-edit";
     }
@@ -84,7 +84,7 @@ public class PizzeriaController {
             Model model) {
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("ingridients", ingridientRepo.findAll());
+            model.addAttribute("ingridients", ingridientService.getAll());
             model.addAttribute("edit", true);
             return "pizza/create-or-edit";
         }
