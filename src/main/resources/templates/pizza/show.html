@@ -28,7 +28,7 @@
                                 </div>
                                 <div>Prezzo: [[*{price}]]€</div>
                                 <div class="d-flex justify-content-start my-3">
-                                    <div>
+                                    <div sec:authorize="hasAuthority('ADMIN')">
                                         <a class="btn btn-primary btn-sm"
                                             th:href="@{/pizzeria/{id}/offer (id=${pizza.id})}">Aggiungi offerta</a>
                                     </div>
@@ -44,7 +44,8 @@
                                                     <span>[[${offer.start}]] / [[${offer.end}]]</span>
                                                 </p>
                                             </div>
-                                            <div class="d-flex align-items-center">
+                                            <div sec:authorize="hasAuthority('ADMIN')"
+                                                class="d-flex align-items-center">
                                                 <div class="me-2">
                                                     <a class="btn btn-warning btn-sm"
                                                         th:href="@{/offer/edit/{id} (id=${offer.id})}"><i

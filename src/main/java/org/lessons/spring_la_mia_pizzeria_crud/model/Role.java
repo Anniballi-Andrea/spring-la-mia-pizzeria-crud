@@ -21,10 +21,11 @@ public class Role {
     private Integer id;
 
     @NotBlank(message = "L'username non può essere vuoto ")
-    private String username;
+    private String name;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     @JsonBackReference
+    private Set<User> users;
 
     public Set<User> getUsers() {
         return this.users;
@@ -34,8 +35,6 @@ public class Role {
         this.users = users;
     }
 
-    private Set<User> users;
-
     public Integer getId() {
         return this.id;
     }
@@ -44,12 +43,12 @@ public class Role {
         this.id = id;
     }
 
-    public String getUsername() {
-        return this.username;
+    public String getName() {
+        return this.name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

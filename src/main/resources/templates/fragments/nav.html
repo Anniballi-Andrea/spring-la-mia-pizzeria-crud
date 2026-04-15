@@ -10,7 +10,7 @@
 <th:block th:fragment="nav">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">Navbar</a>
+            <a class="navbar-brand" href="/">Home</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -20,11 +20,16 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" th:href="@{/pizzeria}">Le nostre pizze</a>
                     </li>
-                    <li>
+                    <li sec:authorize="hasAuthority('ADMIN')">
                         <a class="nav-link active" aria-current="page" th:href="@{/ingridients}">I nostri
                             ingredienti</a>
                     </li>
                 </ul>
+            </div>
+            <div class="user-info">
+                Logged user: <span sec:authentication="name" class="fw-bold me-2"></span>
+                Roles: <span sec:authentication="principal.authorities"></span>
+                <a class="btn btn-sm btn-outline-primary" href="/logout">Sign out</a>
             </div>
         </div>
     </nav>

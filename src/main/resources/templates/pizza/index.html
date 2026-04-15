@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lxmls:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <th:block th:replace="~{fragments/style :: style}"></th:block>
@@ -30,8 +30,15 @@
 
                 </div>
             </div>
-            <div class="mt-3">
-                <a class="btn btn-primary" th:href="@{/pizzeria/create}"><i class="bi bi-plus-square"></i></a>
+            <div class="mt-3 d-flex">
+                <div class="me-2">
+                    <a class="btn btn-primary btn-sm" th:href="@{/pizzeria/create}"
+                        sec:authorize="hasAuthority('ADMIN')">
+                        <i class="bi bi-plus-square"></i>
+                    </a>
+                </div>
+
+                <h3 th:text="'Ciao '+ ${username}"></h3>
             </div>
 
             <table class="table" th:if="${pizzas.size() > 0}">
@@ -42,8 +49,8 @@
                         <th>immagine</th>
                         <th>prezzo</th>
                         <th>Apri</th>
-                        <th>Modifica</th>
-                        <th>Elimina</th>
+                        <th sec:authorize="hasAuthority('ADMIN')">Modifica</th>
+                        <th sec:authorize="hasAuthority('ADMIN')">Elimina</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,12 +60,18 @@
                         <td>[[*{description}]]</td>
                         <td><img th:src="@{/images/{img}(img=*{image})}" alt="" style="width: 100px;"></td>
                         <td>[[*{price}]] €</td>
-                        <td><a th:href="@{/pizzeria/{id}(id=*{id})}" class="btn btn-primary btn-sm"><i
-                                    class="bi bi-arrow-right-square"></i></a></td>
-                        <td><a th:href="@{/pizzeria/edit/{id}(id=*{id})}" class="btn btn-success btn-sm"><i
-                                    class="bi bi-pencil"></i></a>
-                        </td>
                         <td>
+                            <a th:href="@{/pizzeria/{id}(id=*{id})}" class="btn btn-primary btn-sm">
+                                <i class="bi bi-arrow-right-square"></i>
+                            </a>
+                        </td>
+                        <td sec:authorize="hasAuthority('ADMIN')">
+                            <a th:href="@{/pizzeria/edit/{id}(id=*{id})}" class="btn btn-success btn-sm">
+                                <i class="bi bi-pencil">
+                                </i>
+                            </a>
+                        </td>
+                        <td sec:authorize="hasAuthority('ADMIN')">
 
 
                             <div th:replace="~{fragments/modal :: modal(*{id})}"></div>
